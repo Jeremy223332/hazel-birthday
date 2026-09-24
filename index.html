@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -182,7 +183,7 @@
         </p>
 
         <button onclick="startMusic()">
-            🎵 Unlock Music!
+            🎵 Enter Hazel's Music Room!
         </button>
 
     </div>
@@ -221,48 +222,5 @@
         }
 
 
-        function startMusic() {
-
-            alert("🎵 Music section unlocked! We'll add the YouTube search next! 🎵");
-
-        }
-
-
-        function createConfetti() {
-
-            for (let i = 0; i < 80; i++) {
-
-                const confetti = document.createElement("div");
-
-                confetti.innerHTML = ["🎉", "✨", "💖", "🎈", "⭐"][Math.floor(Math.random() * 5)];
-
-                confetti.style.position = "fixed";
-                confetti.style.left = Math.random() * 100 + "vw";
-                confetti.style.top = "-30px";
-                confetti.style.fontSize = "25px";
-                confetti.style.zIndex = "9999";
-
-                document.body.appendChild(confetti);
-
-                const fall = confetti.animate(
-                    [
-                        { transform: "translateY(0) rotate(0deg)" },
-                        { transform: "translateY(110vh) rotate(720deg)" }
-                    ],
-                    {
-                        duration: 2500 + Math.random() * 2000,
-                        easing: "linear"
-                    }
-                );
-
-                fall.onfinish = function() {
-                    confetti.remove();
-                };
-            }
-
-        }
-
-    </script>
-
-</body>
-</html>
+        function startM
+```
