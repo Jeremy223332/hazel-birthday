@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hazel's 5th Birthday 🎂</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ffb6e6, #b8e7ff);
+            min-height: 100vh;
+            text-align: center;
+            color: white;
+        }
+
+        .screen {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 25px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            font-size: 55px;
+            margin: 10px;
+            text-shadow: 4px 4px #ff69b4;
+        }
+
+        h2 {
+            font-size: 32px;
+        }
+
+        p {
+            font-size: 22px;
+        }
+
+        button {
+            border: none;
+            border-radius: 20px;
+            padding: 18px 30px;
+            margin: 10px;
+            font-size: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            background: white;
+            color: #ff4fa3;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+
+        button:hover {
+            transform: scale(1.08);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .cake {
+            font-size: 100px;
+            animation: bounce 1.5s infinite;
+        }
+
+        .question {
+            font-size: 35px;
+            font-weight: bold;
+        }
+
+        #message {
+            font-size: 28px;
+            font-weight: bold;
+            min-height: 40px;
+        }
+
+        .wrong {
+            animation: shake 0.3s;
+        }
+
+        .correct {
+            font-size: 40px;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        @keyframes shake {
+            0%, 100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-10px);
+            }
+
+            75% {
+                transform: translateX(10px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HOME SCREEN -->
+    <div id="home" class="screen">
+
+        <div class="cake">🎂</div>
+
+        <h1>🎉 Happy Birthday Hazel! 🎉</h1>
+
+        <h2>💖 Hazel is FIVE! 💖</h2>
+
+        <p>
+            🎈 Welcome to Hazel's Birthday Game! 🎈
+        </p>
+
+        <button onclick="startQuiz()">
+            🎮 Start Age Quiz
+        </button>
+
+    </div>
+
+
+    <!-- QUIZ SCREEN -->
+    <div id="quiz" class="screen hidden">
+
+        <h1>🎤 Hazel's Age Quiz!</h1>
+
+        <div class="question">
+            What age are you? 🤔
+        </div>
+
+        <div id="answers">
+
+            <button onclick="wrongAnswer(this)">
+                3️⃣
+            </button>
+
+            <button onclick="wrongAnswer(this)">
+                6️⃣
+            </button>
+
+            <button onclick="wrongAnswer(this)">
+                8️⃣
+            </button>
+
+            <button onclick="correctAnswer(this)">
+                5️⃣
+            </button>
+
+        </div>
+
+        <div id="message"></div>
+
+    </div>
+
+
+    <!-- WIN SCREEN -->
+    <div id="win" class="screen hidden">
+
+        <div class="cake">🎂</div>
+
+        <h1>🎉 YOU GOT IT! 🎉</h1>
+
+        <div class="correct">
+            💖 Hazel is 5! 💖
+        </div>
+
+        <p>
+            ⭐ Amazing job! ⭐
+        </p>
+
+        <button onclick="startMusic()">
+            🎵 Unlock Music!
+        </button>
+
+    </div>
+
+
+    <script>
+
+        function startQuiz() {
+            document.getElementById("home").classList.add("hidden");
+            document.getElementById("quiz").classList.remove("hidden");
+        }
+
+
+        function wrongAnswer(button) {
+
+            const message = document.getElementById("message");
+
+            message.innerHTML = "❌ Try again! 💕";
+
+            button.classList.add("wrong");
+
+            setTimeout(function() {
+                button.remove();
+            }, 300);
+
+        }
+
+
+        function correctAnswer(button) {
+
+            document.getElementById("quiz").classList.add("hidden");
+            document.getElementById("win").classList.remove("hidden");
+
+            createConfetti();
+
+        }
+
+
+        function startMusic() {
+
+            alert("🎵 Music section unlocked! We'll add the YouTube search next! 🎵");
+
+        }
+
+
+        function createConfetti() {
+
+            for (let i = 0; i < 80; i++) {
+
+                const confetti = document.createElement("div");
+
+                confetti.innerHTML = ["🎉", "✨", "💖", "🎈", "⭐"][Math.floor(Math.random() * 5)];
+
+                confetti.style.position = "fixed";
+                confetti.style.left = Math.random() * 100 + "vw";
+                confetti.style.top = "-30px";
+                confetti.style.fontSize = "25px";
+                confetti.style.zIndex = "9999";
+
+                document.body.appendChild(confetti);
+
+                const fall = confetti.animate(
+                    [
+                        { transform: "translateY(0) rotate(0deg)" },
+                        { transform: "translateY(110vh) rotate(720deg)" }
+                    ],
+                    {
+                        duration: 2500 + Math.random() * 2000,
+                        easing: "linear"
+                    }
+                );
+
+                fall.onfinish = function() {
+                    confetti.remove();
+                };
+            }
+
+        }
+
+    </script>
+
+</body>
+</html>
