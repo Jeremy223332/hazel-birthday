@@ -1,9 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Hazel's 5th Birthday 🎂</title>
 
     <style>
@@ -58,7 +58,7 @@
         }
 
         .hidden {
-            display: none;
+            display: none !important;
         }
 
         .cake {
@@ -75,10 +75,6 @@
             font-size: 28px;
             font-weight: bold;
             min-height: 40px;
-        }
-
-        .wrong {
-            animation: shake 0.3s;
         }
 
         .correct {
@@ -108,32 +104,34 @@
                 transform: translateX(10px);
             }
         }
+
+        .wrong {
+            animation: shake 0.3s;
+        }
     </style>
 </head>
 
 <body>
 
-    <!-- HOME SCREEN -->
+    <!-- HOME -->
     <div id="home" class="screen">
 
         <div class="cake">🎂</div>
 
         <h1>🎉 Happy Birthday Hazel! 🎉</h1>
 
-        <h2>💖 Happy Birthday Hazel! 💖</h2>
+        <h2>💖 Hazel is FIVE! 💖</h2>
 
-        <p>
-            🎈 Welcome to Hazel's Birthday Game! 🎈
-        </p>
+        <p>🎈 Welcome to Hazel's Birthday Game! 🎈</p>
 
-        <button onclick="startQuiz()">
+        <button id="startQuizButton">
             🎮 Start Age Quiz
         </button>
 
     </div>
 
 
-    <!-- QUIZ SCREEN -->
+    <!-- QUIZ -->
     <div id="quiz" class="screen hidden">
 
         <h1>🎤 Hazel's Age Quiz!</h1>
@@ -144,21 +142,13 @@
 
         <div id="answers">
 
-            <button onclick="wrongAnswer(this)">
-                3️⃣
-            </button>
+            <button class="wrongButton">3️⃣</button>
 
-            <button onclick="wrongAnswer(this)">
-                6️⃣
-            </button>
+            <button class="wrongButton">6️⃣</button>
 
-            <button onclick="wrongAnswer(this)">
-                8️⃣
-            </button>
+            <button class="wrongButton">8️⃣</button>
 
-            <button onclick="correctAnswer(this)">
-                5️⃣
-            </button>
+            <button id="correctButton">5️⃣</button>
 
         </div>
 
@@ -167,7 +157,7 @@
     </div>
 
 
-    <!-- WIN SCREEN -->
+    <!-- WIN -->
     <div id="win" class="screen hidden">
 
         <div class="cake">🎂</div>
@@ -178,11 +168,9 @@
             💖 Hazel is 5! 💖
         </div>
 
-        <p>
-            ⭐ Amazing job! ⭐
-        </p>
+        <p>⭐ Amazing job! ⭐</p>
 
-        <button onclick="startMusic()">
+        <button id="musicButton">
             🎵 Enter Hazel's Music Room!
         </button>
 
@@ -191,74 +179,104 @@
 
     <script>
 
-        function startQuiz() {
+        // START QUIZ
+        document.getElementById("startQuizButton").addEventListener("click", function() {
+
             document.getElementById("home").classList.add("hidden");
+
             document.getElementById("quiz").classList.remove("hidden");
-        }
+
+        });
 
 
-        function wrongAnswer(button) {
+        // WRONG ANSWERS
+        document.querySelectorAll(".wrongButton").forEach(function(button) {
 
-            const message = document.getElementById("message");
+            button.addEventListener("click", function() {
 
-            message.innerHTML = "❌ Try again! 💕";
+                document.getElementById("message").innerHTML =
+                    "❌ Try again! 💕";
 
-            button.classList.add("wrong");
+                button.classList.add("wrong");
 
-            setTimeout(function() {
-                button.remove();
-            }, 300);
+                setTimeout(function() {
+                    button.remove();
+                }, 300);
 
-        }
+            });
+
+        });
 
 
-        function correctAnswer(button) {
+        // CORRECT ANSWER
+        document.getElementById("correctButton").addEventListener("click", function() {
 
             document.getElementById("quiz").classList.add("hidden");
+
             document.getElementById("win").classList.remove("hidden");
 
             createConfetti();
-function startMusic() {
-    alert("🎵 Welcome to Hazel's Music Room! 🎵");
-}
 
-function createConfetti() {
+        });
 
-    for (let i = 0; i < 80; i++) {
 
-        const confetti = document.createElement("div");
+        // MUSIC BUTTON
+        document.getElementById("musicButton").addEventListener("click", function() {
 
-        confetti.innerHTML =
-            ["🎉", "✨", "💖", "🎈", "⭐"][
-                Math.floor(Math.random() * 5)
-            ];
+            alert("🎵 Welcome to Hazel's Music Room! 🎵");
 
-        confetti.style.position = "fixed";
-        confetti.style.left = Math.random() * 100 + "vw";
-        confetti.style.top = "-30px";
-        confetti.style.fontSize = "25px";
-        confetti.style.zIndex = "9999";
+        });
 
-        document.body.appendChild(confetti);
 
-        const fall = confetti.animate(
-            [
-                { transform: "translateY(0) rotate(0deg)" },
-                { transform: "translateY(110vh) rotate(720deg)" }
-            ],
-            {
-                duration: 2500 + Math.random() * 2000,
-                easing: "linear"
+        // CONFETTI
+        function createConfetti() {
+
+            for (let i = 0; i < 80; i++) {
+
+                const confetti = document.createElement("div");
+
+                confetti.innerHTML =
+                    ["🎉", "✨", "💖", "🎈", "⭐"]
+                    [Math.floor(Math.random() * 5)];
+
+                confetti.style.position = "fixed";
+
+                confetti.style.left =
+                    Math.random() * 100 + "vw";
+
+                confetti.style.top = "-30px";
+
+                confetti.style.fontSize = "25px";
+
+                confetti.style.zIndex = "9999";
+
+                document.body.appendChild(confetti);
+
+                const fall = confetti.animate(
+                    [
+                        {
+                            transform: "translateY(0) rotate(0deg)"
+                        },
+                        {
+                            transform:
+                                "translateY(110vh) rotate(720deg)"
+                        }
+                    ],
+                    {
+                        duration: 2500 + Math.random() * 2000,
+                        easing: "linear"
+                    }
+                );
+
+                fall.onfinish = function() {
+                    confetti.remove();
+                };
+
             }
-        );
 
-        fall.onfinish = function() {
-            confetti.remove();
-        };
-    }
-}
+        }
 
-</script>
+    </script>
 
 </body>
 </html>
